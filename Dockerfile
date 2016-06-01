@@ -15,27 +15,30 @@ RUN \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get install -y openjdk-7-jdk && \
+  apt-get --no-install-recommends install -q -y openjdk-7-jre-headless && \
   rm -rf /var/lib/apt/lists/*
 
 # Add files.
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
+ADD http://mirrors.jenkins-ci.org/war/2.4/jenkins.war /opt/jenkins.war
+
+RUN chmod 644 /opt/jenkins.war
 
 # Set environment variables.
 ENV HOME /root
-
-# Install Java.
-RUN \
-  apt-get update && \
-  apt-get install -y openjdk-7-jdk && \
-  rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV JENKINS_HOME /jenkins
 
 # Define working directory.
 WORKDIR /data
 
-# Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENTRYPOINT ["java", "-jar", "/opt/jenkins.war"]
+
+# expose port 8080
+EXPOSE 8080
 
 # Define default command.
 CMD ["bash"]
