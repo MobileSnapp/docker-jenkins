@@ -15,24 +15,19 @@ RUN \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
-  #apt-get install -y openjdk-7-jdk && \
   apt-get --no-install-recommends install -q -y openjdk-7-jre-headless && \
-  apt-get install git curl wget mysql-client -y -q \
+  apt-get install git curl wget mysql-client -y -q && \
   rm -rf /var/lib/apt/lists/*
 
 # Add files.
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
-#ADD http://mirrors.jenkins-ci.org/war/2.4/jenkins.war /opt/jenkins.war
-
-#RUN chmod 644 /opt/jenkins.war
 
 # Set environment variables.
 ENV HOME /root
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-ENV JENKINS_HOME /jenkins
 ENV JENKINS_PREFIX /
+ENV JENKINS_HOME /opt/jenkins/jenkins_home
 ENV JAVA_ARGS -Xmx2048m -XX:MaxPermSize=512m
 
 RUN mkdir -p /opt/jenkins
@@ -48,11 +43,3 @@ CMD exec java $JAVA_ARGS -jar $JENKINS_HOME/../jenkins.war --prefix=$JENKINS_PRE
 # expose ports
 EXPOSE 50000/tcp
 EXPOSE 8080/tcp
-
-# Define working directory.
-WORKDIR /data
-
-ENTRYPOINT ["java", "-jar", "/opt/jenkins.war"]
-
-# Define default command.
-CMD ["bash"]
