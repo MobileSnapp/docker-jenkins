@@ -1,4 +1,7 @@
 # docker-jenkins
+
+[![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)](http://www.mobilesnapp.com)
+
 Docker container with Jenkins service
 
 Usage:
