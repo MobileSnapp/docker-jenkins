@@ -19,11 +19,6 @@ RUN \
   apt-get install git curl wget zip mysql-client -y -q && \
   rm -rf /var/lib/apt/lists/*
 
-# Add files.
-#ADD root/.bashrc /root/.bashrc
-#ADD root/.gitconfig /root/.gitconfig
-#ADD root/.scripts /root/.scripts
-
 # Set environment variables.
 ENV HOME /root
 ENV JENKINS_PREFIX /
@@ -32,6 +27,7 @@ ENV JENKINS_HOME /var/jenkins_home
 ENV JAVA_ARGS -Xmx2048m -XX:MaxPermSize=512m
 ENV JENKINS_SLAVE_AGENT_PORT 50000
 
+# Set user data.
 ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
@@ -87,5 +83,6 @@ USER ${user}
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
-# from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
+# From a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
+COPY install-plugins.sh /usr/local/bin/install-plugins.sh
