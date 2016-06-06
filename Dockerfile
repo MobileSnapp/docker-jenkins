@@ -22,7 +22,6 @@ RUN \
 # Set environment variables.
 ENV HOME /root
 ENV JENKINS_PREFIX /
-#ENV JENKINS_HOME /opt/jenkins/jenkins_home
 ENV JENKINS_HOME /var/jenkins_home
 ENV JAVA_ARGS -Xmx2048m -XX:MaxPermSize=512m
 ENV JENKINS_SLAVE_AGENT_PORT 50000
