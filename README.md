@@ -120,4 +120,4 @@ And in derived Dockerfile just invoke the utility plugin.sh script
 
 ## Author
 
-  * MobileSnapp (<support@mobilesnapp.com>)
+MobileSnapp (<support@mobilesnapp.com>)
